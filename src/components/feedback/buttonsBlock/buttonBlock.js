@@ -7,7 +7,11 @@ const ButtonBlock = ({ options, onLeaveFeedback }) => {
     <Div>
       {options.map((name) => {
         return (
-          <Button key={name} type="button" onClick={() => onLeaveFeedback(name)}>
+          <Button
+            key={name}
+            type="button"
+            onClick={() => onLeaveFeedback(name)}
+          >
             {name}
           </Button>
         );
