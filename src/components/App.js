@@ -20,14 +20,6 @@ class Feedback extends Component {
     positive: 0,
   };
 
-  onLeaveFeedback = (name) => {
-    this.setState((myPrevState) => {
-      return {
-        [name]: myPrevState[name] + 1,
-      };
-    });
-  };
-
   countTotalFeedback = () => {
     this.setState(({ good, bad, neutral }) => {
       return {
@@ -44,8 +36,12 @@ class Feedback extends Component {
     });
   };
 
-  countFeedback = (item) => {
-    this.onLeaveFeedback(item);
+  onLeaveFeedback = (name) => {
+    this.setState((myPrevState) => {
+      return {
+        [name]: myPrevState[name] + 1,
+      };
+    });
     this.countTotalFeedback();
     this.countPositiveFeedbackPercentage();
   };
@@ -56,7 +52,7 @@ class Feedback extends Component {
       <>
         <ButtonBlock
           options={listFeedback}
-          onLeaveFeedback={this.countFeedback}
+          onLeaveFeedback={this.onLeaveFeedback}
         />
         <StatisticsBlock
           good={good}
