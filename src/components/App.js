@@ -16,24 +16,17 @@ class Feedback extends Component {
     good: 0,
     neutral: 0,
     bad: 0,
-    total: 0,
-    positive: 0,
   };
 
   countTotalFeedback = () => {
-    this.setState(({ good, bad, neutral }) => {
-      return {
-        total: good + bad + neutral,
-      };
-    });
+    const { good, bad, neutral } = this.state;
+    return good + bad + neutral;
   };
 
   countPositiveFeedbackPercentage = () => {
-    this.setState(({ good, total }) => {
-      return {
-        positive: 100 / (total / good),
-      };
-    });
+    const { good } = this.state;
+    const total = this.countTotalFeedback();
+    return 100 / (total / good);
   };
 
   onLeaveFeedback = (name) => {
@@ -42,12 +35,13 @@ class Feedback extends Component {
         [name]: myPrevState[name] + 1,
       };
     });
-    this.countTotalFeedback();
-    this.countPositiveFeedbackPercentage();
   };
 
   render() {
-    const { good, bad, neutral, total, listFeedback, positive } = this.state;
+    const { good, bad, neutral, listFeedback } = this.state;
+    const totalFeedback = this.countTotalFeedback();
+    const positiveFeedback = this.countPositiveFeedbackPercentage().toFixed(0);
+
     return (
       <>
         <ButtonBlock
@@ -58,8 +52,8 @@ class Feedback extends Component {
           good={good}
           neutral={neutral}
           bad={bad}
-          total={total}
-          positive={positive.toFixed(2)}
+          total={totalFeedback}
+          positive={positiveFeedback}
         />
       </>
     );
